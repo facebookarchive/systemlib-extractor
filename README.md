@@ -5,12 +5,15 @@ Parts of HHVM are implemented in Hack, and are embedded in the HHVM binary
 as additional ELF PROGDATA sections. This library extracts them from the
 binary.
 
-There are two kinds of sections:
+There are two kinds of sections that this library extracts:
 
  - `systemlib`: Pure Hack code
  - `ext`: built-in extensions. These are a mix of normal Hack code, and
    functions annotated with the `<<__Native>>` user attribute, which are
    implemented in the C++ runtime
+
+Sections with different names or aren't PROGDATA can not be examined with this
+library.
 
 Requirements
 ------------
