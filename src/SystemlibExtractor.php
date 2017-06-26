@@ -19,7 +19,10 @@ class SystemlibExtractor {
     ?string $readelf = null,
   ) {
     if ($readelf === null) {
-      $readelf = trim(shell_exec('which readelf'));
+      $readelf = shell_exec('which readelf');
+      if ($readelf !== null) {
+        $readelf = trim($readelf);
+      }
     }
     if (!is_executable($readelf)) {
       throw new ReadelfNotFoundException(
