@@ -2,7 +2,7 @@
 set -ex
 hhvm --version
 apt-get update -y
-apt-get install -y wget curl git
+apt-get install -y binutils
 curl https://getcomposer.org/installer | hhvm -d hhvm.jit=0 --php -- /dev/stdin --install-dir=/usr/local/bin --filename=composer
 
 cd /var/source
