@@ -1,4 +1,4 @@
-Systemlib Extractor
+Systemlib Extractor [![Build Status](https://travis-ci.org/hhvm/systemlib-extractor.svg?branch=master)](https://travis-ci.org/hhvm/systemlib-extractor)
 ===================
 
 Parts of HHVM are implemented in Hack, and are embedded in the HHVM binary
