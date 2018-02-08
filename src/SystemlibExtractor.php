@@ -34,7 +34,7 @@ class SystemlibExtractor {
   }
 
   <<__Memoize>>
-  public function getSectionNames(): \ConstVector<string> {
+  public function getSectionNames(): ImmVector<string> {
     $parts = Vector {
       $this->readelf,
       '--section-headers',
@@ -45,7 +45,7 @@ class SystemlibExtractor {
       ->filter($line ==> \strpos($line, 'PROGBITS') !== false)
       ->map($line ==> \preg_split('/\s+/', $line)[2])
       ->filter($name ==> \preg_match('/^(ext\.|systemlib$)/', $name) !== 0);
-    return $sections;
+    return $sections->immutable();
   }
 
   <<__Memoize>>
