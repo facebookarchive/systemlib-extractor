@@ -14,7 +14,7 @@ class MainTest extends \PHPUnit_Framework_TestCase {
     $this->assertNotEmpty(
       (new SystemlibExtractor())
       ->getSectionNames()
-      ->filter($name ==> substr($name, 0, 3) === 'ext'),
+      ->filter($name ==> \substr($name, 0, 3) === 'ext'),
     );
   }
 
@@ -22,7 +22,7 @@ class MainTest extends \PHPUnit_Framework_TestCase {
     $bytes = (new SystemlibExtractor())->getSectionContents('systemlib');
     $this->assertSame(
       false,
-      strpos($bytes, '<?hhas'),
+      \strpos($bytes, '<?hhas'),
     );
   }
 
@@ -45,12 +45,12 @@ class MainTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertSame(
       '<?hh',
-      substr($bytes, 0, 4),
+      \substr($bytes, 0, 4),
     );
 
     $this->assertGreaterThan(
       $min_size,
-      strlen($bytes),
+      \strlen($bytes),
     );
   }
 }
