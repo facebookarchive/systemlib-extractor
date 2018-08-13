@@ -1,29 +1,26 @@
 <?hh
 
 namespace HHVM\SystemlibExtractor;
+use function Facebook\FBExpect\expect;
 
 class MainTest extends \PHPUnit_Framework_TestCase {
   public function testContainsSystemlib(): void {
-    $this->assertContains(
+    expect((new SystemlibExtractor())->getSectionNames())->toContain(
       'systemlib',
-      (new SystemlibExtractor())->getSectionNames(),
     );
   }
 
   public function testContainsExtensions(): void {
-    $this->assertNotEmpty(
+    expect(
       (new SystemlibExtractor())
-      ->getSectionNames()
-      ->filter($name ==> \substr($name, 0, 3) === 'ext'),
-    );
+        ->getSectionNames()
+        ->filter($name ==> \substr($name, 0, 3) === 'ext'),
+    )->toNotBeEmpty();
   }
 
   public function testSystemlibDoesNotContainHHAS(): void {
     $bytes = (new SystemlibExtractor())->getSectionContents('systemlib');
-    $this->assertSame(
-      false,
-      \strpos($bytes, '<?hhas'),
-    );
+    expect(\strpos($bytes, '<?hhas'))->toBeSame(false);
   }
 
   public function sectionsProvider(): array<array<mixed>> {
@@ -43,14 +40,8 @@ class MainTest extends \PHPUnit_Framework_TestCase {
   public function testCanExtractSection(string $name, int $min_size): void {
     $bytes = (new SystemlibExtractor())->getSectionContents($name);
 
-    $this->assertSame(
-      '<?hh',
-      \substr($bytes, 0, 4),
-    );
+    expect(\substr($bytes, 0, 4))->toBeSame('<?hh');
 
-    $this->assertGreaterThan(
-      $min_size,
-      \strlen($bytes),
-    );
+    expect(\strlen($bytes))->toBeGreaterThan($min_size);
   }
 }
